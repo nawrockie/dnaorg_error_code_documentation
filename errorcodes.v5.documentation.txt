@@ -1,0 +1,127 @@
+Last updated: EPN, Fri Jan  8 11:51:02 2016
+
+Sections of this file:
+1. The v5 error codes
+2. Thoughts on 'really bad' error combinations that could be used to
+   identify and filter problematic sequences
+3. List of required error combinations
+4. List of incompatible error combinations
+5. Other known restrictions of error combinations
+6. Notes on olp errors
+7. Notes on stp, trc, ext and nst errors
+8. Miscellaneous notes
+
+--------------------------------------------------------------------
+1. The v5 error codes
+--------------------------------------------------------------------
+ idx code  example-error-message
+ --- ----  ---------------------
+   1  nop  unable to identify homologous feature|
+   2  ori  there is not exactly 1 occurrence of origin sequence [0 occurrences]|
+   3  nm3  length of nucleotide feature is not a multiple of 3 [1900]|
+   4  bd5  alignment to reference does not extend to 5' boundary of reference [2 nt from 5' end]|
+   5  bd3  alignment to reference does not extend to 3' boundary of reference [7 nt from 3' end]|
+   6  olp  feature does not overlap with same set of features as in reference [8.1 != NONE (ref)]|
+   7  str  predicted CDS start position from homology search is not beginning of ATG start codon [AAA]|
+   8  stp  predicted CDS stop  position from homology search is not end of valid stop codon (TAG|TAA|TGA) [AAT]|
+   9  ajb  mature peptide is not adjacent to same set of mature peptides before it as in reference [NONE != 14.1 (ref)]|
+  10  aja  mature peptide is not adjacent to same set of mature peptides after it as in reference [NONE != 14.1 (ref)]|
+  11  trc  in-frame stop codon exists 5' of stop position predicted by homology to reference [homology search predicted 1801..1360 revised to 1801..1376 (stop shifted 16 nt)]|
+  12  ext  first in-frame stop codon exists 3' of stop position predicted by homology to reference [homology search predicted 1801..1360 revised to 1801..1351 (stop shifted by 9 nt)]|
+  13  ntr  mature peptide is not translated because its CDS has an in-frame stop 5' of the mature peptide's predicted start [stop at positions 1498-1500]|
+  14  nst  no in-frame stop codon exists 3' of predicted valid start codon|
+  15  aji  CDS comprised of mat_peptides has at least one adjacency inconsistency between 2 mat_peptides [MP#7 (2420..3475) not adjacent to MP#8 (3477..3506)]|
+  16  int  CDS comprised of mat_peptides is incomplete: at least one mat_peptide is not translated due to early stop (ntr) [MP#8, MP#9, MP#10, MP#11, MP#12, MP#13, MP#14]|
+  17  inp  CDS comprised of mat_peptides is incomplete: at least one mat_peptide is not identified (nop)  [MP#12]|
+
+--------------------------------------------------------------------
+2. Thoughts on 'really bad' error combinations that could be used to
+identify and filter problematic sequences
+--------------------------------------------------------------------
+The three most extreme errors are probably 'nop', 'str' and 'nst'. Any
+accession with at least one of these errors could be considered
+'problematic', and could be filtered out before analyses such as
+phylogenetic inference.
+
+The fourth most extreme is probably 'nm3', although it can occur in
+valid sequences. One suggestion Alejandro had was to identify unique
+length nm3 errors (that is, features that have a feature with a nm3
+error and a length that differs from all other observed lengths for
+that feature), as a way to label 'problematic' sequences.
+
+--------------------------------------------------------------------
+3. List of required error combinations:
+--------------------------------------------------------------------
+- ext will only occur in combination with stp
+- nst will only occur in combination with stp
+[THIS LIST IS (PROBABLY) NOT EXHAUSTIVE!]
+
+--------------------------------------------------------------------
+4. List of incompatible error combinations
+--------------------------------------------------------------------
+- str will never occur in combination with stp
+- str will never occur in combination with trc
+- str will never occur in combination with ext
+[THIS LIST IS (PROBABLY) NOT EXHAUSTIVE!]
+
+--------------------------------------------------------------------
+5. Other known restrictions of error combinations:
+--------------------------------------------------------------------
+- at most one of trc, ext, nst will be observed for a feature
+[THIS LIST IS (PROBABLY) NOT EXHAUSTIVE!]
+
+--------------------------------------------------------------------
+6. Notes on olp errors:
+--------------------------------------------------------------------
+- The str, trc, ext and stp errors do not prevent olp errors from being
+  reported. The predicted start and stop positions of each feature are
+  compared to determine overlaps, even if those features have a str,
+  trc, ext or stp error. 
+
+- nop errors result in no start and stop prediction for a feature, and
+  so prevent any test for overlaps for the feature which is not
+  predicted so that feature will not overlap with any other
+  feature. This can cause an olp error if that feature does overlap 
+  with other features in the reference.
+
+--------------------------------------------------------------------
+7. Notes on stp, trc, ext and nst errors:
+--------------------------------------------------------------------
+- The codes stp, trc, ext, and nst are related.  For exon-based CDS
+  (as opposed to mature peptide-based CDS): at most one of trc, ext,
+  and nst is printed when those three problems arise and the ext and
+  nst errors are always accompanied by a stp error. A trc error can be
+  co-occur with a stp error, but does not have to, which allows us to
+  distinguish between early stops that occur in predictions that have
+  a valid stop in the homologous stop position from those that do
+  not. For mature peptide-based CDS, the relationship between these
+  errors is more complicated because these CDS are annotated based on
+  the collective annotation of the mature peptides that comprise them,
+  and I won't attempt to precisely define that relationship here.
+
+- The 'trc' and 'ext' error codes differ in the following way:
+
+  o For a 'trc' error the predicted stop will 5' (upstream) of the
+    homology-based stop and the homology-based stop may or not be a
+    valid in-frame stop codon. Thus a 'trc' error may or may not be
+    accompanied by a 'stp' error.
+
+  o For an 'ext' error, the predicted stop will be 3' (downstream) of
+    the homology-based stop and the homology-based stop will *not* be an
+    in-frame stop codon. Thus, an 'ext' error is always accompanied by a
+   'stp' error.
+
+  o Above, 'homology-based stop' refers to the stop position indicated
+    by the homology search, which is changed in the case of a 'trc' or
+    'ext' error as described in 'Further notes' below
+
+
+--------------------------------------------------------------------
+8. Miscellaneous notes
+--------------------------------------------------------------------
+- The predicted stop positions are not necessarily the positions
+  determined by the homology search. Often they are, but in the case
+  of a 'trc' or 'ext' error, the homology-based stop position will
+  have been 'corrected' to be the first in-frame stop codon 3'
+  (downstream) of the predicted start codon (which has been validated
+  to be an ATG).
