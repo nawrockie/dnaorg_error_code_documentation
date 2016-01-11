@@ -41,7 +41,7 @@ Sections of this file:
 --------------------------------------------------------------------
 The annotation script (dnaorg_annotate_genomes.pl) produces an output
 file with the suffix <s>.all.errors. This file includes a list of all
-errors found, 1 error per line, with informative error messages like
+errors found, one error per line, with informative error messages such as
 those present in the table in section (1) above. 
 
 The beginning of the .all.errors file includes explanatory text
@@ -99,11 +99,11 @@ script:
    the table in (1) above, all error codes that exist for that
    feature in the current accession, if they exist.
 
-If a accession's feature has 0 error codes associated with it,
+If an accession's feature has no error codes associated with it,
 there will not be any lines of this file that pertain to that
 accession and feature.
 
-If an accession has 0 error codes associated with it or any of its
+If an accession has no error codes associated with it or any of its
 features, there will not be any lines of this file that pertain to
 that accession.
 
@@ -118,7 +118,7 @@ This follows a general principle that even when the presence of one
 error necessarily implies the presence of another error, both errors
 are usually printed. A few situations that might be considered
 exceptions to this principle are delineated specifically below in
-sections (4) and (5).
+sections (5) through (8).
 
 --------------------------------------------------------------------
 (3) Error code information in the .peraccn.errors output file
@@ -162,18 +162,19 @@ AF418690 1:olp:-(1.1,5.1),trc 5:olp:-(5.1,1.1)
 The accessions will be printed in the order they appear in the input
 accession list file passed into the annotation script. 
 
-If an accession has 0 error codes associated with it or any of its
+If an accession has no error codes associated with it or any of its
 features, there will not be any lines of this file that pertain to
 that accession.
 
 The order of the errors per accession is the same as it is for the
 .all.errors file described in (2). The order is determined primarily
-by feature. First comes the 'ori' error, if it exists, then all error
+by feature. First, comes the 'ori' error, if it exists, then all error
 codes for feature 1, then all error codes for feature 2, then all
 error codes for feature 3, and so on.  Per-feature error codes appear
 in the same order they appear in the error code table in (1).  The
-error codes for feature i, start with 'i:'. If are no errors for
-feature i, then the string 'i:' does not appear for that accession.
+error codes for feature i (i is a positive integer), start with 'i:'.
+If are no errors for feature i, then the string 'i:' does not appear
+for that accession.
 
 As for the .all.errors file, an because an overlap (olp) error
 involves two features, the same overlap error is printed twice
@@ -249,11 +250,11 @@ the origin sequence or the presence/absence of any variants.
 
 - nop errors result in no start and stop prediction for a feature, and
   thereby prevent any test for overlaps for the feature which is not
-  predicted; as a consequence if feature i has a nop error, then
+  predicted; as a consequence, if feature i has a nop error, then
   feature i will not overlap with any other feature, and there will be
   an olp- error if feature i is expected to overlap with another
-  feature. This can cause an olp error if that feature does overlap
-  with other features in the reference.
+  feature. This can cause an olp error, if that feature does overlap
+  with any other features in the reference.
 
 --------------------------------------------------------------------
 (9) Notes on stp, trc, ext and nst errors:
@@ -268,7 +269,7 @@ the origin sequence or the presence/absence of any variants.
   not. For mature peptide-based CDS, the relationship between these
   errors is more complicated because these CDS are annotated based on
   the collective annotation of the mature peptides that comprise them,
-  and I won't attempt to precisely define that relationship here.
+  and there is not an attempt here to define precisely that relationship.
 
 - The 'trc' and 'ext' error codes differ in the following way:
 
@@ -284,7 +285,7 @@ the origin sequence or the presence/absence of any variants.
 
   o Above, 'homology-based stop' refers to the stop position indicated
     by the homology search, which is changed in the case of a 'trc' or
-    'ext' error as described in 'Further notes' below
+    'ext' error as described in 'Miscellaneous notes' below
 
 --------------------------------------------------------------------
 (10) Miscellaneous notes
