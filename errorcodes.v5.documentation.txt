@@ -1,4 +1,4 @@
-Last updated: EPN, Sat Jan  9 08:29:47 2016
+Last updated: EPN, Thu Mar 17 10:45:20 2016
 
 Sections of this file:
  (1) The v5 error codes
@@ -26,8 +26,8 @@ Sections of this file:
    6  olp  feature does not overlap with same set of features as in reference [-(1.1,6.1)]
    7  str  predicted CDS start position from homology search is not beginning of ATG start codon [AAA]
    8  stp  predicted CDS stop  position from homology search is not end of valid stop codon (TAG|TAA|TGA) [AAT]
-   9  ajb  mature peptide is not adjacent to same set of mature peptides before it as in reference [NONE != 14.1 (ref)]
-  10  aja  mature peptide is not adjacent to same set of mature peptides after it as in reference [NONE != 14.1 (ref)]
+   9  ajb  feature (MP or CDS) is not adjacent to same set of features before it as in reference [NONE != 14.1 (ref)]
+  10  aja  feature (MP or CDS) is not adjacent to same set of features after it as in reference [NONE != 14.1 (ref)]
   11  trc  in-frame stop codon exists 5' of stop position predicted by homology to reference [homology search predicted 1801..1360 revised to 1801..1376 (stop shifted 16 nt)]
   12  ext  first in-frame stop codon exists 3' of stop position predicted by homology to reference [homology search predicted 1801..1360 revised to 1801..1351 (stop shifted by 9 nt)]
   13  ntr  mature peptide is not translated because its CDS has an in-frame stop 5' of the mature peptide's predicted start [stop at positions 1498-1500]
@@ -211,17 +211,33 @@ assembly.  This remains to be explored.
 --------------------------------------------------------------------
 (5) List of required error combinations
 --------------------------------------------------------------------
+NONE (?)
+
+Previously we thought that:
 - ext will only occur in combination with stp
 - nst will only occur in combination with stp
-[THIS LIST IS (PROBABLY) NOT EXHAUSTIVE!]
+
+However this is not true, because a 'stp' error is only thrown if
+predicted final 3 nts of a CDS are not a valid stop codon regardless
+of the frame they are in. 'ext' errors occur if no valid *in-frame*
+stop codon exists between predicted start and stop, and 'nst' error
+occurs if no valid *in-frame* stop codon exists 3' of predicted
+start. So you can have cases of 'ext' and not 'stp', and you can have
+cases of 'nst' and not 'stp'.
 
 --------------------------------------------------------------------
 (6) List of incompatible combinations of different error codes
 --------------------------------------------------------------------
-- str will never occur in combination with stp
-- str will never occur in combination with trc
-- str will never occur in combination with ext
+- str will never occur in combination with stp or trc or ext
+- trc will never occur in combination with ext or nst or aji or inp 
+- nop will never occur in combination with nm3 or bd5 or bd3 or str or stp or trc or ext or ntr or nst or aji or int or inp
+  (nop will only occur in combination with olp or aja or ajb)
+
 [THIS LIST IS (PROBABLY) NOT EXHAUSTIVE!]
+
+These incompatible combinations are now enforced by the annotation
+script in the 'dnaorg.pm::initializeHardCodedErrorInfoHash' function.
+See the code for details.
 
 --------------------------------------------------------------------
 (7) Other known restrictions on combinations of different error codes
