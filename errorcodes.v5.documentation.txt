@@ -4,8 +4,8 @@ Sections of this file:
  (1) The v5 error codes
  (2) Error code information in the .all.errors output file
  (3) Error code information in the .peraccn.errors output file
- (4) Thoughts on 'really bad' error combinations that could be used to
-     identify and filter problematic sequences
+ (4) Thoughts on 'really bad' error combinations that could be 
+     used to identify and filter problematic sequences
  (5) List of required error combinations
  (6) List of incompatible error combinations
  (7) Other known restrictions of error combinations
