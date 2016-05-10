@@ -272,6 +272,11 @@ the origin sequence or the presence/absence of any variants.
   feature. This can cause an olp error, if that feature does overlap
   with any other features in the reference.
 
+- If two features overlap in the reference, and are instead adjacent
+  in the genome being annotated, then this will lead to olp- errors
+  for both features, an ajb error for the earlier feature, and an aja
+  error for the later feature.
+
 --------------------------------------------------------------------
 (9) Notes on stp, trc, ext and nst errors:
 --------------------------------------------------------------------
