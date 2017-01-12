@@ -25,16 +25,17 @@ Sections of this file:
    5  bd3  alignment to reference does not extend to 3' boundary of reference [7 nt from 3' end]
    6  olp  feature does not overlap with same set of features as in reference [-(1.1,6.1)]
    7  str  predicted CDS start position from homology search is not beginning of ATG start codon [AAA]
-   8  stp  predicted CDS stop  position from homology search is not end of valid stop codon (TAG|TAA|TGA) [AAT]
+   8  stp  predicted CDS stop by homology is invalid; there may be a valid stop in a different location due to truncation (trc) or extension (ext) (TAG|TAA|TGA)
    9  ajb  feature (MP or CDS) is not adjacent to same set of features before it as in reference [NONE != 14.1 (ref)]
   10  aja  feature (MP or CDS) is not adjacent to same set of features after it as in reference [NONE != 14.1 (ref)]
   11  trc  in-frame stop codon exists 5' of stop position predicted by homology to reference [homology search predicted 1801..1360 revised to 1801..1376 (stop shifted 16 nt)]
   12  ext  first in-frame stop codon exists 3' of stop position predicted by homology to reference [homology search predicted 1801..1360 revised to 1801..1351 (stop shifted by 9 nt)]
   13  ntr  mature peptide is not translated because its CDS has an in-frame stop 5' of the mature peptide's predicted start [stop at positions 1498-1500]
   14  nst  no in-frame stop codon exists 3' of predicted valid start codon
-  15  aji  CDS comprised of mat_peptides has at least one adjacency inconsistency between 2 mat_peptides [MP#7 (2420..3475) not adjacent to MP#8 (3477..3506)]
-  16  int  CDS comprised of mat_peptides is incomplete: at least one mat_peptide is not translated due to early stop (ntr) [MP#8, MP#9, MP#10, MP#11, MP#12, MP#13, MP#14]
-  17  inp  CDS comprised of mat_peptides is incomplete: at least one mat_peptide is not identified (nop)  [MP#12]
+  15  ost  predicted feature is on opposite strand from reference
+  16  aji  CDS comprised of mat_peptides has at least one adjacency inconsistency between 2 mat_peptides [MP#7 (2420..3475) not adjacent to MP#8 (3477..3506)]
+  17  int  CDS comprised of mat_peptides is incomplete: at least one mat_peptide is not translated due to early stop (ntr) [MP#8, MP#9, MP#10, MP#11, MP#12, MP#13, MP#14]
+  18  inp  CDS comprised of mat_peptides is incomplete: at least one mat_peptide is not identified (nop)  [MP#12]
 
 --------------------------------------------------------------------
 (2) Error code information in the .all.errors output file
