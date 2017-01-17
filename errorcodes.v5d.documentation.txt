@@ -22,8 +22,8 @@ Sections of this file:
    2  nop  unable to identify homologous feature
    3  nm3  length of nucleotide feature is not a multiple of 3 [1900]
    4  b5e  alignment to reference does not extend to 5' boundary of reference but does extend to 5' boundary of target [2 nt from 5' end]
-   5  b5u  alignment to reference does not extend to 3' boundary of reference or target [2 nt from 5' end]
-   6  b3e  alignment to reference does not extend to 5' boundary of reference but does extend to 3' boundary of target [7 nt from 3' end]
+   5  b5u  alignment to reference does not extend to 5' boundary of reference or target [2 nt from 5' end]
+   6  b3e  alignment to reference does not extend to 3' boundary of reference but does extend to 3' boundary of target [7 nt from 3' end]
    7  b3u  alignment to reference does not extend to 3' boundary of reference or target [7 nt from 3' end]
    8  olp  feature does not overlap with same set of features as in reference [-(1.1,6.1)]
    9  str  predicted CDS start position from homology search is not beginning of ATG start codon [AAA]
